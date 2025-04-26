@@ -244,6 +244,6 @@ For the database, Neon.tech provides a serverless PostgreSQL that works well wit
 - Product categories and tags
 - Customer reviews and ratings
 
-## 🤝 Contributing
+<!-- ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request or open an issue for any bugs or feature suggestions.
+Contributions are welcome! Please feel free to submit a Pull Request or open an issue for any bugs or feature suggestions. -->

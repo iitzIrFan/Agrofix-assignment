@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const sessionId = context.params.id;
+    const { id: sessionId } = await context.params;
 
     if (!sessionId) {
       return NextResponse.json(

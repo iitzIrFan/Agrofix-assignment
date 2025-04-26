@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -12,7 +12,7 @@ export async function PUT(
   }
   
   try {
-    const id = context.params.id;
+    const { id } = await context.params;
     const body = await request.json();
     const { status } = body;
     

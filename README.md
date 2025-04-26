@@ -1,36 +1,249 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🥦 Agrofix - Bulk Vegetable/Fruit Ordering Platform
 
-## Getting Started
+A full-stack web application for managing bulk fruit and vegetable orders. Built using **Next.js (App Router)**, **PostgreSQL**, **Prisma**, and **Tailwind CSS**. Buyers can place and track orders; admins can manage products and update order statuses.
 
-First, run the development server:
+## ✨ Modern UI Design
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Agrofix features a visually appealing, user-friendly interface designed with the following principles:
+
+- **Consistent Design Language**: Clean, consistent styling across all pages
+- **Intuitive Navigation**: Clear calls-to-action and logical user flows
+- **Visual Hierarchy**: Important elements are emphasized appropriately
+- **Responsive Layout**: Optimized for all devices from mobile to desktop
+- **Accessibility**: Designed with accessibility in mind for all users
+
+## ✅ Features
+
+### 🛒 Buyer Features
+- **Modern Homepage**  
+  Attractive hero section with clear product showcasing and key benefits.  
+  **Route:** `/`
+- **Streamlined Bulk Order**  
+  Intuitive form with product selection, quantity, personal details, and delivery address.  
+  **Route:** `/order`
+- **Enhanced Shopping Cart**  
+  Add multiple products with clear order summary and secure checkout process.  
+  **Route:** `/cart` and `/checkout`
+- **Visual Order Tracking**  
+  Track orders with intuitive status visualization and helpful guidance.  
+  **Route:** `/track`
+- **Dual Ordering Paths**  
+  Flexibility between single-product bulk orders and multi-product cart checkout.
+
+### 🛠️ Admin Features
+- **Secure Authentication**  
+  Admin login with credentials protected by environment variables.
+- **Interactive Dashboard**  
+  Comprehensive dashboard with total orders, revenue, and product statistics.
+- **Orders Management**  
+  Detailed order view with buyer information and delivery details.
+- **Status Management**  
+  Intuitive interface for order status updates with visual indicators.
+- **Product Management**  
+  User-friendly interface for adding, editing, and removing products.  
+  **Route:** `/admin`
+
+## 🗂️ Project Structure
+
+```
+agrofix-platform/
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   │   ├── admin/        # Admin dashboard and management
+│   │   ├── api/          # API routes
+│   │   ├── cart/         # Shopping cart page
+│   │   ├── checkout/     # Checkout flow
+│   │   ├── order/        # Bulk order form
+│   │   ├── track/        # Order tracking
+│   │   ├── layout.tsx    # Root layout with shared components
+│   │   └── page.tsx      # Homepage
+│   ├── components/       # Reusable UI components
+│   │   ├── CartDisplay.tsx
+│   │   ├── CartIndicator.tsx
+│   │   ├── ProductCard.tsx
+│   │   └── ResponsiveHandler.tsx
+│   └── lib/              # Utility functions and shared logic
+├── prisma/               # Database schema and migrations
+│   ├── migrations/
+│   └── schema.prisma     # Database models
+└── public/               # Static assets
+    ├── vegetables.jpg    # Hero image
+    └── other SVG icons
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔗 API Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Method | Route | Description |
+|--------|-------|-------------|
+| `GET` | `/api/products` | Get all products |
+| `POST` | `/api/order` | Create a new order |
+| `GET` | `/api/order/:id` | Fetch order status |
+| `GET` | `/api/checkout/:id` | Fetch checkout session orders |
+| `GET` | `/api/admin/stats` | Get admin dashboard statistics |
+| `GET` | `/api/admin/orders` | Get all orders for admin |
+| `PUT` | `/api/admin/order/:id` | Update order status |
+| `POST` | `/api/admin/products` | Add a product |
+| `PUT` | `/api/admin/products/:id` | Edit a product |
+| `DELETE` | `/api/admin/products/:id` | Delete a product |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧠 PostgreSQL Database Schema (Prisma)
 
-## Learn More
+```prisma
+model Product {
+  id        String   @id @default(uuid())
+  name      String
+  price     Float
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
 
-To learn more about Next.js, take a look at the following resources:
+model Order {
+  id                String      @id @default(uuid())
+  product           Product     @relation(fields: [productId], references: [id])
+  productId         String
+  quantity          Int
+  buyerName         String
+  contact           String
+  address           String
+  status            OrderStatus @default(PENDING)
+  createdAt         DateTime    @default(now())
+  checkoutSessionId String?     // For grouping cart orders
+}
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  DELIVERED
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📱 Responsive Design
 
-## Deploy on Vercel
+The application is fully responsive with:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Mobile-First Approach**: Designed to work seamlessly on small screens first
+- **Adaptive Layouts**: Flexible grids that adapt to different screen sizes
+- **Touch-Friendly UI**: Large touch targets for mobile users
+- **Device Detection**: The `ResponsiveHandler` component detects screen size and adjusts the UI accordingly
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 UI Components
+
+Agrofix includes several custom UI components:
+
+- **ProductCard**: Displays product information with Add to Cart functionality
+- **CartDisplay**: Shows items in cart with quantity controls
+- **CartIndicator**: Navigation icon showing current cart status
+- **ResponsiveHandler**: Handles responsive design adaptation
+
+## 🛠 Tech Stack
+- **Framework**: Next.js 14 (App Router)
+- **Database**: PostgreSQL (Neon.tech)
+- **ORM**: Prisma
+- **Styling**: Tailwind CSS
+- **State Management**: React Context API for cart state
+- **Deployment**: Vercel
+
+## ⚙️ Setup Instructions
+
+1. **Clone the repository**:
+   ```
+   git clone https://github.com/your-username/agrofix-platform
+   cd agrofix-platform
+   ```
+
+2. **Install dependencies**:
+   ```
+   npm install
+   ```
+
+3. **Configure environment variables**:
+   
+   Create a `.env` file with the following variables:
+   ```
+   DATABASE_URL=postgresql://username:password@host/db
+   ADMIN_SECRET=your_secret_admin_token
+   ```
+
+4. **Initialize the Prisma database**:
+   ```
+   npx prisma generate
+   npx prisma migrate dev --name init
+   ```
+
+5. **Run the development server**:
+   ```
+   npm run dev
+   ```
+
+6. **Access the application**:
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Admin Panel: [http://localhost:3000/admin](http://localhost:3000/admin)
+
+## 🔧 Development Workflow
+
+1. **Database Changes**:
+   - Edit `prisma/schema.prisma`
+   - Run `npx prisma migrate dev --name your_change_name`
+   - Prisma Client is auto-generated
+
+2. **Adding New Features**:
+   - Create new components in `src/components`
+   - Add new pages in `src/app`
+   - Implement API endpoints in `src/app/api`
+
+3. **Testing**:
+   - Manual testing using the development server
+   - Test all user flows from product browsing to order completion
+
+## 🧪 Advanced Features
+- ✅ Secure admin authentication (token-based)
+- ✅ Interactive admin dashboard with real-time statistics
+- ✅ Dual ordering systems (direct bulk order and cart checkout)
+- ✅ Checkout session tracking for grouped orders
+- ✅ Form validation and user-friendly error messages
+- ✅ Fully responsive design optimized for all devices
+- ✅ Environment variable management
+- ✅ Modern UI with consistent design language
+- ✅ Intuitive user flows for both customers and administrators
+
+## 📸 Screenshots
+
+*Add screenshots of your application here to showcase the UI:*
+
+### Homepage
+*Screenshot of homepage with hero section and products*
+
+### Bulk Order Form
+*Screenshot of the order form*
+
+### Cart & Checkout
+*Screenshot of shopping cart page*
+
+### Order Tracking
+*Screenshot of order tracking interface*
+
+### Admin Dashboard
+*Screenshot of admin interface*
+
+## 🚀 Deployment
+
+This application is designed to be deployed on Vercel:
+
+1. Connect your GitHub repository to Vercel
+2. Configure the environment variables
+3. Deploy automatically with each push to main branch
+
+For the database, Neon.tech provides a serverless PostgreSQL that works well with this application.
+
+## 📝 Future Enhancements
+- User accounts and login functionality
+- Enhanced product filtering and search
+- Email notifications for order updates
+- Payment gateway integration
+- Admin analytics dashboard with charts
+- Product categories and tags
+- Customer reviews and ratings
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request or open an issue for any bugs or feature suggestions.

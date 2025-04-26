@@ -2,15 +2,9 @@ import { isAuthenticated, unauthorizedResponse } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RouteParams = {
-  params: {
-    id: string;
-  };
-};
-
 export async function PUT(
   request: NextRequest,
-  { params }: RouteParams
+  context: { params: { id: string } }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -18,7 +12,7 @@ export async function PUT(
   }
   
   try {
-    const { id } = params;
+    const { id } = context.params;
     const body = await request.json();
     const { name, price } = body;
     
@@ -53,7 +47,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteParams
+  context: { params: { id: string } }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -61,7 +55,7 @@ export async function DELETE(
   }
   
   try {
-    const { id } = params;
+    const { id } = context.params;
     
     // Check if there are orders using this product
     const orderCount = await prisma.order.count({

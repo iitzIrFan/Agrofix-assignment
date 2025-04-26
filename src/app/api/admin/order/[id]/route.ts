@@ -2,15 +2,10 @@ import { isAuthenticated, unauthorizedResponse } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RouteParams = {
-  params: {
-    id: string;
-  };
-};
-
+// Use the Next.js export type directly
 export async function PUT(
   request: NextRequest,
-  { params }: RouteParams
+  context: { params: { id: string } }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -18,7 +13,7 @@ export async function PUT(
   }
   
   try {
-    const { id } = params;
+    const { id } = context.params;
     const body = await request.json();
     const { status } = body;
     

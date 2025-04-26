@@ -1,15 +1,12 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RouteParams = {
-  params: {
-    id: string;
-  };
-};
-
-export async function GET(request: NextRequest, props: RouteParams) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const sessionId = props.params.id;
+    const sessionId = params.id;
 
     if (!sessionId) {
       return NextResponse.json(

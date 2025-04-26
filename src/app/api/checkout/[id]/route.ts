@@ -1,12 +1,9 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, props: any) {
   try {
-    const sessionId = context.params.id;
+    const sessionId = props.params.id;
 
     if (!sessionId) {
       return NextResponse.json(

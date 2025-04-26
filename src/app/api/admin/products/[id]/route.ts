@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -12,7 +12,7 @@ export async function PUT(
   }
   
   try {
-    const id = params.id;
+    const id = context.params.id;
     const body = await request.json();
     const { name, price } = body;
     
@@ -47,7 +47,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -55,7 +55,7 @@ export async function DELETE(
   }
   
   try {
-    const id = params.id;
+    const id = context.params.id;
     
     // Check if there are orders using this product
     const orderCount = await prisma.order.count({

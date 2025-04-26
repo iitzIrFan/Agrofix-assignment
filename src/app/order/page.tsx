@@ -5,7 +5,7 @@ import OrderForm from './OrderForm';
 export default async function OrderPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // Get products for dropdown
   const products = await prisma.product.findMany({
@@ -13,7 +13,8 @@ export default async function OrderPage({
   });
 
   // Handle pre-selected product from URL params
-  const selectedProductId = searchParams.productId as string | undefined;
+  const resolvedSearchParams = await searchParams;
+  const selectedProductId = resolvedSearchParams.productId as string | undefined;
 
   return (
     <div className="max-w-6xl mx-auto">

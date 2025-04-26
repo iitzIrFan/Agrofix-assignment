@@ -1,13 +1,14 @@
 import OrderTracker from './OrderTracker';
 
-export default function TrackPage({
+export default async function TrackPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // Get order ID and checkout session ID from URL
-  const orderId = searchParams.orderId as string | undefined;
-  const checkoutSessionId = searchParams.checkoutSessionId as string | undefined;
+  const resolvedSearchParams = await searchParams;
+  const orderId = resolvedSearchParams.orderId as string | undefined;
+  const checkoutSessionId = resolvedSearchParams.checkoutSessionId as string | undefined;
 
   return (
     <div className="max-w-4xl mx-auto">

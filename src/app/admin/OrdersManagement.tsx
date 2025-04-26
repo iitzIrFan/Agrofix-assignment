@@ -33,29 +33,12 @@ interface OrdersManagementProps {
   authToken: string;
 }
 
-interface FormData {
-  [key: string]: string | number | undefined;
-  buyerName?: string;
-  contact?: string;
-  address?: string;
-  productId?: string;
-  quantity?: number;
-}
-
-interface FormErrors {
-  [key: string]: string | undefined;
-  form?: string;
-}
-
 export default function OrdersManagement({ authToken }: OrdersManagementProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [groupedOrders, setGroupedOrders] = useState<GroupedOrders[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({});
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState<'individual' | 'grouped'>('grouped');
   const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
   
@@ -269,32 +252,6 @@ export default function OrdersManagement({ authToken }: OrdersManagementProps) {
       }
       return newExpanded;
     });
-  };
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    
-    // Trim whitespace for text inputs
-    const trimmedValue = typeof value === 'string' ? value.trim() : value;
-    
-    // For numeric fields, ensure valid input
-    if (name === 'quantity' && (isNaN(Number(value)) || Number(value) < 1)) {
-      setErrors(prev => ({ ...prev, [name]: 'Please enter a valid quantity (minimum 1)' }));
-    } else {
-      // Clear error when field is valid
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-    
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
   };
   
   if (loading) {

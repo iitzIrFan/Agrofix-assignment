@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     //   static: 180,
     // },
   },
+  // Note: For Prisma to work properly on Vercel, ensure the build script
+  // in package.json includes "prisma generate" before "next build"
 };
 
 export default nextConfig;

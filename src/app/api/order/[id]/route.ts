@@ -1,10 +1,12 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(request: NextRequest) {
+export async function PUT(
+  request: NextRequest,
+  context: { params: { id: string } }
+) {
   try {
-    // Extract the 'id' from the request URL directly
-    const id = request.nextUrl.pathname.split('/').pop()!; // Access dynamic part of the route
+    const id = context.params.id;
 
     // Update the order with the provided id
     const order = await prisma.order.update({

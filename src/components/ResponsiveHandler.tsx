@@ -1,16 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function ResponsiveHandler() {
-  // Use state to track if component has mounted (client-side only)
-  const [hasMounted, setHasMounted] = useState(false);
-  
   // This effect will only run on the client
   useEffect(() => {
-    // Update mount state
-    setHasMounted(true);
-    
     // Handle resize events
     const handleResize = () => {
       if (typeof window !== 'undefined') {

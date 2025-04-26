@@ -32,7 +32,7 @@ export default function TrackPage({
           <div className="mt-8 p-6 bg-amber-50 border border-amber-100 rounded-xl">
             <h3 className="font-medium text-amber-800 mb-2">Need Help?</h3>
             <p className="text-amber-700 mb-4">
-              If you're having trouble tracking your order or have any questions, our customer support team is here to help.
+              If you&apos;re having trouble tracking your order or have any questions, our customer support team is here to help.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -81,7 +81,7 @@ export default function TrackPage({
               </div>
               <div>
                 <h3 className="font-medium">Processing</h3>
-                <p className="text-sm text-gray-600">We're preparing your order for shipment</p>
+                <p className="text-sm text-gray-600">We&apos;re preparing your order for shipment</p>
               </div>
             </div>
             

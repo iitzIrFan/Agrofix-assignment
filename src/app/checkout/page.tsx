@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     buyerName: '',

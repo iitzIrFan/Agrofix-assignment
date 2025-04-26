@@ -1,7 +1,7 @@
 'use client';
 
 import { formatCurrency, formatEnumValue } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface OrderTrackingProps {
   initialOrderId?: string;
@@ -38,29 +38,7 @@ export default function OrderTracker({ initialOrderId, initialCheckoutSessionId 
   const [error, setError] = useState('');
   const [trackBy, setTrackBy] = useState<'order' | 'session'>(initialCheckoutSessionId ? 'session' : 'order');
 
-  // Fetch order when component mounts if initialOrderId is provided
-  useEffect(() => {
-    if (initialOrderId) {
-      trackOrder();
-    } else if (initialCheckoutSessionId) {
-      trackSession();
-    }
-  }, []);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (trackBy === 'order') {
-      setOrderId(e.target.value);
-      // Clear previous results
-      setOrderDetails(null);
-    } else {
-      setCheckoutSessionId(e.target.value);
-      // Clear previous results
-      setSessionDetails(null);
-    }
-    setError('');
-  };
-
-  const trackOrder = async () => {
+  const trackOrder = useCallback(async () => {
     if (!orderId.trim()) {
       setError('Please enter an order ID');
       return;
@@ -86,9 +64,9 @@ export default function OrderTracker({ initialOrderId, initialCheckoutSessionId 
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderId]);
 
-  const trackSession = async () => {
+  const trackSession = useCallback(async () => {
     if (!checkoutSessionId.trim()) {
       setError('Please enter a checkout session ID');
       return;
@@ -114,6 +92,28 @@ export default function OrderTracker({ initialOrderId, initialCheckoutSessionId 
     } finally {
       setLoading(false);
     }
+  }, [checkoutSessionId]);
+
+  // Fetch order when component mounts if initialOrderId is provided
+  useEffect(() => {
+    if (initialOrderId) {
+      trackOrder();
+    } else if (initialCheckoutSessionId) {
+      trackSession();
+    }
+  }, [initialOrderId, initialCheckoutSessionId, trackOrder, trackSession]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (trackBy === 'order') {
+      setOrderId(e.target.value);
+      // Clear previous results
+      setOrderDetails(null);
+    } else {
+      setCheckoutSessionId(e.target.value);
+      // Clear previous results
+      setSessionDetails(null);
+    }
+    setError('');
   };
 
   const handleSubmit = (e: React.FormEvent) => {

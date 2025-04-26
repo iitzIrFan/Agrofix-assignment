@@ -1,7 +1,7 @@
 'use client';
 
 import { formatCurrency, formatEnumValue } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface Order {
   id: string;
@@ -34,7 +34,7 @@ interface OrdersManagementProps {
 }
 
 interface FormData {
-  [key: string]: string | number;
+  [key: string]: string | number | undefined;
   buyerName?: string;
   contact?: string;
   address?: string;
@@ -43,7 +43,7 @@ interface FormData {
 }
 
 interface FormErrors {
-  [key: string]: string;
+  [key: string]: string | undefined;
   form?: string;
 }
 
@@ -59,7 +59,7 @@ export default function OrdersManagement({ authToken }: OrdersManagementProps) {
   const [viewMode, setViewMode] = useState<'individual' | 'grouped'>('grouped');
   const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
   
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setLoading(true);
     
     try {
@@ -86,7 +86,7 @@ export default function OrdersManagement({ authToken }: OrdersManagementProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [authToken]);
   
   // Group orders that came from the same cart checkout
   const groupOrdersByCheckoutSession = (orders: Order[]): GroupedOrders[] => {
@@ -125,7 +125,7 @@ export default function OrdersManagement({ authToken }: OrdersManagementProps) {
   
   useEffect(() => {
     fetchOrders();
-  }, [authToken]);
+  }, [fetchOrders]);
   
   const updateOrderStatus = async (orderId: string, newStatus: 'PENDING' | 'IN_PROGRESS' | 'DELIVERED') => {
     setUpdatingOrderId(orderId);

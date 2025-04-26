@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import AdminDashboard from './AdminDashboard';
 import AdminLogin from './AdminLogin';
 
@@ -41,11 +42,11 @@ export default function AdminPage() {
         <div className="bg-amber-50 border border-amber-100 p-6 rounded-xl text-amber-800 mb-6">
           <h2 className="text-lg font-medium mb-2">Admin Access Only</h2>
           <p>
-            This area is restricted to authorized administrators. If you're a customer looking to place an order, 
+            This area is restricted to authorized administrators. If you&apos;re a customer looking to place an order, 
             please return to the main website.
           </p>
           <div className="mt-4">
-            <a 
+            <Link 
               href="/" 
               className="inline-flex items-center text-amber-700 hover:text-amber-900 font-medium"
             >
@@ -53,7 +54,7 @@ export default function AdminPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
               Return to Homepage
-            </a>
+            </Link>
           </div>
         </div>
       )}

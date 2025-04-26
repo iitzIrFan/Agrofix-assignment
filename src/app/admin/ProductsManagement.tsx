@@ -1,7 +1,7 @@
 'use client';
 
 import { formatCurrency } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface Product {
   id: string;
@@ -18,7 +18,6 @@ export default function ProductsManagement({ authToken }: ProductsManagementProp
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isAddingProduct, setIsAddingProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -29,7 +28,7 @@ export default function ProductsManagement({ authToken }: ProductsManagementProp
   const [formError, setFormError] = useState('');
   const [deletingProductId, setDeletingProductId] = useState<string | null>(null);
   
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     
     try {
@@ -52,11 +51,11 @@ export default function ProductsManagement({ authToken }: ProductsManagementProp
     } finally {
       setLoading(false);
     }
-  };
+  }, [authToken]);
   
   useEffect(() => {
     fetchProducts();
-  }, [authToken]);
+  }, [fetchProducts]);
   
   const resetForm = () => {
     setFormData({

@@ -1,7 +1,7 @@
 'use client';
 
 import { formatCurrency } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface DashboardStatsProps {
   authToken: string;
@@ -26,7 +26,7 @@ export default function DashboardStats({ authToken }: DashboardStatsProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     setLoading(true);
     setError('');
     
@@ -50,11 +50,11 @@ export default function DashboardStats({ authToken }: DashboardStatsProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [authToken]);
   
   useEffect(() => {
     fetchStats();
-  }, [authToken]);
+  }, [fetchStats]);
   
   if (loading) {
     return <div className="text-center py-4">Loading dashboard statistics...</div>;

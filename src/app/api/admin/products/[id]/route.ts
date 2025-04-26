@@ -2,9 +2,15 @@ import { isAuthenticated, unauthorizedResponse } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
+type RouteParams = {
+  params: {
+    id: string;
+  };
+};
+
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {
@@ -47,7 +53,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   // Check authentication
   if (!isAuthenticated(request)) {

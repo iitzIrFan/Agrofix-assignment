@@ -206,7 +206,7 @@ Agrofix includes several custom UI components:
 - ✅ Modern UI with consistent design language
 - ✅ Intuitive user flows for both customers and administrators
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots
 
 *Add screenshots of your application here to showcase the UI:*
 
@@ -223,7 +223,7 @@ Agrofix includes several custom UI components:
 *Screenshot of order tracking interface*
 
 ### Admin Dashboard
-*Screenshot of admin interface*
+*Screenshot of admin interface* -->
 
 ## 🚀 Deployment
 

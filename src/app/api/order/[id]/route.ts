@@ -1,7 +1,13 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, props: any) {
+type RouteParams = {
+  params: {
+    id: string;
+  };
+};
+
+export async function GET(request: NextRequest, props: RouteParams) {
   try {
     const id = props.params.id;
     

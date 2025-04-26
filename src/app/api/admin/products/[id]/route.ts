@@ -2,7 +2,13 @@ import { isAuthenticated, unauthorizedResponse } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(request: NextRequest, props: any) {
+type RouteParams = {
+  params: {
+    id: string;
+  };
+};
+
+export async function PUT(request: NextRequest, props: RouteParams) {
   // Check authentication
   if (!isAuthenticated(request)) {
     return unauthorizedResponse();
@@ -42,7 +48,7 @@ export async function PUT(request: NextRequest, props: any) {
   }
 }
 
-export async function DELETE(request: NextRequest, props: any) {
+export async function DELETE(request: NextRequest, props: RouteParams) {
   // Check authentication
   if (!isAuthenticated(request)) {
     return unauthorizedResponse();

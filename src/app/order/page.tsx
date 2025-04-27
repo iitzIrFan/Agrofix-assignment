@@ -122,7 +122,7 @@ export default async function OrderPage({
               For very large orders or special requirements, please contact our wholesale team.
             </p>
             <Link 
-              href="mailto:wholesale@agrofix.com" 
+              href="mailto:xyz@gmail.com" 
               className="block w-full bg-gray-100 text-gray-700 text-center py-2.5 px-4 rounded-lg hover:bg-gray-200 transition-colors"
             >
               Contact Wholesale Team

@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/react"
 import CartIndicator from "@/components/CartIndicator";
 import { CartProvider } from "@/lib/cartContext";
 import type { Metadata } from "next";

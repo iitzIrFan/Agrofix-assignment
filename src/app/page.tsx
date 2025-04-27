@@ -1,6 +1,5 @@
 import ProductCard from '@/components/ProductCard';
 import { prisma } from '@/lib/prisma';
-import Link from 'next/link';
 import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import SearchBar from "@/components/SearchBar";
@@ -56,7 +55,7 @@ export default async function Home({
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {(products as Product[]).map((product) => (
               <ProductCard
                 key={product.id}
                 id={product.id}

@@ -1,3 +1,4 @@
+[![Node.js CI](https://github.com/iitzIrFan/Agrofix-assignment/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/iitzIrFan/Agrofix-assignment/actions/workflows/node.js.yml)
 # 🥦 Agrofix - Bulk Vegetable/Fruit Ordering Platform
 
 A full-stack web application for managing bulk fruit and vegetable orders. Built using **Next.js (App Router)**, **PostgreSQL**, **Prisma**, and **Tailwind CSS**. Buyers can place and track orders; admins can manage products and update order statuses.
